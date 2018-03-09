@@ -315,6 +315,8 @@ public class LinkedBinaryTree<E> implements BinaryTree<E> {
             if (isExternal(p)){
                 ((Node) p).setLeft(t1.root);
                 ((Node) p).setRight(t2.root);
+                t1.root.setParent((Node) p);
+                t2.root.setParent((Node) p);
                 size += t1.size + t2.size;
             }else {
                 throw new IllegalArgumentException("Node is not external");

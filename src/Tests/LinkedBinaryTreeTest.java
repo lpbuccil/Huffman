@@ -205,5 +205,5 @@ public class LinkedBinaryTreeTest {
         assertTrue(linkedBinaryTree.sibling(right) == left);
 
     }
-    
+
 }
