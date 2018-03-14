@@ -304,6 +304,7 @@ public class HeapPQ<K, V> implements AdaptablePriorityQueue<K, V> {
         if (isEmpty()) {
             return null;
         }
+
         Entry<K, V> temp = min();
         swap(list, 0, list.size() - 1);
         list.remove(list.size() - 1);

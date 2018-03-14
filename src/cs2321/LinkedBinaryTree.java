@@ -154,10 +154,10 @@ public class LinkedBinaryTree<E> implements BinaryTree<E> {
 
     @Override
     public Iterable<Position<E>> positions() {
-        return preOrderTraversal(root);
+        return Traversal(root);
     }
 
-    public ArrayList<Node<E>> preOrderTraversal(Node<E> node){
+    public ArrayList<Node<E>> Traversal(Node<E> node){
 
         ArrayList<Node<E>> list = new ArrayList<>();
 
@@ -165,8 +165,9 @@ public class LinkedBinaryTree<E> implements BinaryTree<E> {
             return list;
         }
 
-        ArrayList<Node<E>> left = preOrderTraversal(node.getLeft());
-        ArrayList<Node<E>> right = preOrderTraversal(node.getRight());
+        ArrayList<Node<E>> left = Traversal(node.getLeft());
+        ArrayList<Node<E>> right = Traversal(node.getRight());
+
 
         list.addLast(node);
         for (Node<E> ln : left){

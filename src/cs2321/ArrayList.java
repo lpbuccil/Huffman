@@ -193,6 +193,7 @@ public class ArrayList<E> implements List<E> {
             array[j - 1] = array[j];
         }
 
+        array[i] = null;
         size--;
         return e;
     }
