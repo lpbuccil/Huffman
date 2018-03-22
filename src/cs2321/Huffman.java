@@ -1,6 +1,14 @@
+/**
+ * Name:  Lucas Buccilli
+ * Assignment number:  5
+ * Class: CS2321
+ * Description: Compress text file with huffman encoding and decompresses huffman encoded file into text file.
+ */
+
 package cs2321;
 
-import net.datastructures.*;
+import net.datastructures.Entry;
+import net.datastructures.Position;
 
 import java.io.BufferedWriter;
 import java.io.FileReader;
@@ -21,20 +29,22 @@ import java.nio.file.Paths;
  *   if the node is internal, output 1, followed by 
  *  		the bit stream of left subtree, then the bit stream of right subtree. 
  */
-public class Huffman {
+class Huffman {
 
-    LinkedBinaryTree<Character> t = new LinkedBinaryTree();
-    String[] CODE_TABLE = new String[256];
-    String outputfile = "";
-    FileWriter fileWriter;
-    BufferedWriter bufferedWriter;
-    ArrayList<Byte> arrayListOutputByte = new ArrayList<>();
-    int[] byteArray = new int[8];
+    private LinkedBinaryTree t = new LinkedBinaryTree();
+    private String[] CODE_TABLE = new String[256];
+    private String outputfile = "";
+    private BufferedWriter bufferedWriter;
+    private ArrayList<Byte> arrayListOutputByte = new ArrayList<>();
+    private int[] byteArray = new int[8];
     //For decompress
-    int bitCount = 0;
-    ArrayList<Integer> inputBinaryArray;
+    private int bitCount;
+    private ArrayList<Integer> inputBinaryArray;
     //For compress
-    int bitCounter = 0;
+    private int bitCounter;
+
+    private Huffman() {
+    }
 
     /**
      * Decode the compressed data file back to the original data file.
@@ -74,7 +84,8 @@ public class Huffman {
      * @param outputFile The compressed data file that should be generated.
      * @return the length of the data encoded with Huffman Code, don't include data for the prefix tree and length of the original file.
      */
-    public int compress(String inputFile, String outputFile) {
+    @TimeComplexity("O(n log n)")
+    private int compress(String inputFile, String outputFile) {
 
 
         t = new LinkedBinaryTree();
@@ -127,7 +138,7 @@ public class Huffman {
 
         try {
             fileWriter = new FileWriter(outputfile);
-            this.bufferedWriter = new BufferedWriter(fileWriter);
+            bufferedWriter = new BufferedWriter(fileWriter);
 
         } catch (IOException e) {
             System.out.println("ERROR: Cannot write file");
@@ -220,7 +231,7 @@ public class Huffman {
      *
      * @param input int 1 or 0
      */
-    public void writeBit(int input) {
+    private void writeBit(int input) {
 
         byteArray[bitCount] = input;
         bitCount++;
@@ -254,7 +265,7 @@ public class Huffman {
     /**
      * Writes to the file from output array
      */
-    public void writeFile() {
+    private void writeFile() {
         byte[] outputByteArray = new byte[arrayListOutputByte.size()];
 
         for (int i = 0; i < arrayListOutputByte.size(); i++) {
@@ -274,7 +285,7 @@ public class Huffman {
      * @param //frequency array A
      * @return huffman tree
      */
-    public LinkedBinaryTree<Character> buildPrefixTree(int[] A) {
+    private LinkedBinaryTree<Character> buildPrefixTree(int[] A) {
 
         HeapPQ<Integer, LinkedBinaryTree<Character>> PQ = new HeapPQ<>();
 
@@ -303,10 +314,11 @@ public class Huffman {
 
     /**
      * builds hiffman code table
-     * @param V root node of huffman tree
+     *
+     * @param V    root node of huffman tree
      * @param code
      */
-    public void buildCodeTable(Position<Character> V, String code) {
+    private void buildCodeTable(Position<Character> V, String code) {
         if (t.isExternal(V)) {
             CODE_TABLE[V.getElement()] = code;
         } else {
@@ -318,10 +330,12 @@ public class Huffman {
 
     /**
      * Decodes huffman encoded file
-     * @param inputFile huffman encoded file
+     *
+     * @param inputFile  huffman encoded file
      * @param outputFile plain text file
      */
-    public void decode(String inputFile, String outputFile) {
+    @TimeComplexity("O(n log n)")
+    private void decode(String inputFile, String outputFile) {
 
         t = new LinkedBinaryTree();
         CODE_TABLE = new String[256];
@@ -352,7 +366,7 @@ public class Huffman {
 
 
         //Convert binary strings in arraylist to its binary form then adds 1's and 0's to inputBinaryArray
-        this.inputBinaryArray = new ArrayList<>();
+        inputBinaryArray = new ArrayList<>();
         for (String s : inputStringBytes) {
             for (int i = 0; i < 8; i++) {
                 inputBinaryArray.addLast(Integer.parseInt(String.valueOf(s.charAt(i))));
@@ -409,7 +423,7 @@ public class Huffman {
 
         //write file from output array
         try {
-            fileWriter = new FileWriter(outputFile);
+            FileWriter fileWriter = new FileWriter(outputFile);
 
             fileWriter.write(outputCharArray);
 
@@ -423,9 +437,10 @@ public class Huffman {
 
     /**
      * Creates huffman tree from huffman encoded file
+     *
      * @return huffman tree
      */
-    public LinkedBinaryTree<Character> readPrefixTree() {
+    private LinkedBinaryTree<Character> readPrefixTree() {
         //b - bit
         int b = getNextBit();
 
@@ -450,7 +465,7 @@ public class Huffman {
     /**
      * @return next bit in from file
      */
-    public int getNextBit() {
+    private int getNextBit() {
         int temp = inputBinaryArray.get(bitCounter);
         bitCounter++;
 
@@ -458,10 +473,9 @@ public class Huffman {
     }
 
     /**
-     *
      * @return next byte
      */
-    public int readNextByte() {
+    private int readNextByte() {
         String temp = "";
         for (int i = 0; i < 8; i++) {
             temp += getNextBit();

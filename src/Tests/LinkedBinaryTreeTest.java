@@ -2,7 +2,6 @@ package Tests;
 
 import cs2321.ArrayList;
 import cs2321.LinkedBinaryTree;
-import javafx.geometry.Pos;
 import net.datastructures.Position;
 
 import static org.junit.Assert.*;
@@ -16,7 +15,7 @@ import static org.junit.Assert.*;
  * File Name: LinkedBinaryTreeTest
  */
 public class LinkedBinaryTreeTest {
-    LinkedBinaryTree<Integer> linkedBinaryTree;
+    private LinkedBinaryTree<Integer> linkedBinaryTree;
     @org.junit.Before
     public void setUp() throws Exception {
          linkedBinaryTree = new LinkedBinaryTree<>();

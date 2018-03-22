@@ -15,8 +15,8 @@ import java.util.Iterator;
 
 public class DoublyLinkedList<E> implements PositionalList<E> {
 
-    private Node<E> head;
-    private Node<E> tail;
+    private final Node<E> head;
+    private final Node<E> tail;
     private int size;
 
     public DoublyLinkedList() {
@@ -93,7 +93,7 @@ public class DoublyLinkedList<E> implements PositionalList<E> {
     /**
      * Returns the position before p
      *
-     * @param Position of element you want to know the previous one
+     * @param p of element you want to know the previous one
      * @return position of the previous element
      */
     @TimeComplexity("O(1)")
@@ -120,7 +120,7 @@ public class DoublyLinkedList<E> implements PositionalList<E> {
     /**
      * Returns the position of the element after the specified position
      *
-     * @param Position of element you want to find the one after
+     * @param p of element you want to find the one after
      * @return Position after the position
      */
     @TimeComplexity("O(1)")
@@ -145,7 +145,7 @@ public class DoublyLinkedList<E> implements PositionalList<E> {
     /**
      * Adds a new first element and returns the position
      *
-     * @param Element of the new element
+     * @param e of the new element
      * @return Position of the new node
      */
     @TimeComplexity("O(1)")
@@ -155,7 +155,7 @@ public class DoublyLinkedList<E> implements PositionalList<E> {
         * No loops, only accesses values. Worst case is O(1)
 		*/
         Node<E> second = head.next;
-        Node<E> newNode = new Node<E>(e, head, second);
+        Node<E> newNode = new Node<>(e, head, second);
         head.next = newNode;
         second.prev = newNode;
         size++;
@@ -165,7 +165,7 @@ public class DoublyLinkedList<E> implements PositionalList<E> {
     /**
      * Adds a new element to the end of the list and returns the position
      *
-     * @param Element to be added
+     * @param e to be added
      * @return Position of new node
      */
     @TimeComplexity("O(1)")
@@ -175,7 +175,7 @@ public class DoublyLinkedList<E> implements PositionalList<E> {
         * No Loops, only accesses values, worst case is O(1)
 		*/
         Node<E> currentLast = tail.prev;
-        Node<E> newNode = new Node<E>(e, currentLast, tail);
+        Node<E> newNode = new Node<>(e, currentLast, tail);
         tail.prev = newNode;
         currentLast.next = newNode;
         size++;
@@ -202,7 +202,7 @@ public class DoublyLinkedList<E> implements PositionalList<E> {
         }
 
         Node<E> currentPrev = currentNext.prev;
-        Node<E> newNode = new Node<E>(e, currentPrev, currentNext);
+        Node<E> newNode = new Node<>(e, currentPrev, currentNext);
         currentPrev.next = newNode;
         currentNext.prev = newNode;
 
@@ -232,7 +232,7 @@ public class DoublyLinkedList<E> implements PositionalList<E> {
 
 
         Node<E> currentNext = currentPrev.next;
-        Node<E> newNode = new Node<E>(e, currentPrev, currentNext);
+        Node<E> newNode = new Node<>(e, currentPrev, currentNext);
         currentPrev.next = newNode;
         currentNext.prev = newNode;
         size++;
@@ -254,13 +254,13 @@ public class DoublyLinkedList<E> implements PositionalList<E> {
 		*Worst case is O(1)
 		*/
         Node<E> current = (Node<E>) p;
-        if (current == head || current == tail) {
+        if ((current == head) || (current == tail)) {
             throw new IllegalArgumentException();
         }
 
         Node<E> currentNext = current.next;
         Node<E> currentPrev = current.prev;
-        Node<E> newNode = new Node<E>(e, currentPrev, currentNext);
+        Node<E> newNode = new Node<>(e, currentPrev, currentNext);
         currentPrev.next = newNode;
         currentNext.prev = newNode;
 
@@ -270,7 +270,7 @@ public class DoublyLinkedList<E> implements PositionalList<E> {
     /**
      * Removes a position and returns the element of it
      *
-     * @param Posisiton of node to remove
+     * @param p of node to remove
      * @return The element of the node that was removed
      * @throws IllegalArgumentException if element is not found
      */
@@ -284,7 +284,7 @@ public class DoublyLinkedList<E> implements PositionalList<E> {
 
         Node<E> current = (Node<E>) p;
 
-        if (current == head || current == tail) {
+        if ((current == head) || (current == tail)) {
             throw new IllegalArgumentException();
         }
 
@@ -340,7 +340,7 @@ public class DoublyLinkedList<E> implements PositionalList<E> {
         *Looks through every element.
 		*Worst case is O(n)
 		*/
-        DoublyLinkedList<Position<E>> list = new DoublyLinkedList<Position<E>>();
+        DoublyLinkedList<Position<E>> list = new DoublyLinkedList<>();
 
         Node<E> current = head.next;
         while (current != tail) {
@@ -396,11 +396,11 @@ public class DoublyLinkedList<E> implements PositionalList<E> {
     }
 
     private static class Node<E> implements Position<E> {
-        private E element;
+        private final E element;
         private Node<E> prev;
         private Node<E> next;
 
-        public Node(E e, Node<E> p, Node<E> n) {
+        Node(E e, Node<E> p, Node<E> n) {
             element = e;
             prev = p;
             next = n;
@@ -419,7 +419,7 @@ public class DoublyLinkedList<E> implements PositionalList<E> {
             /* TCJ
             *No loops, only setting a value, worst and best case are O(1);
 			*/
-            if (next == null || prev == null) {
+            if ((next == null) || (prev == null)) {
                 throw new IllegalStateException();
             } else {
                 return element;

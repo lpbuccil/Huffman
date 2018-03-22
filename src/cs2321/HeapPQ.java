@@ -17,7 +17,7 @@ import java.util.Comparator;
 
 public class HeapPQ<K, V> implements AdaptablePriorityQueue<K, V> {
 
-    private ArrayList<AdaptableEntry<K, V>> list;
+    private final ArrayList<AdaptableEntry<K, V>> list;
     private Comparator<K> c = new DefaultComparator<>();
 
 
@@ -43,10 +43,7 @@ public class HeapPQ<K, V> implements AdaptablePriorityQueue<K, V> {
          * No loops.
 		 * Only case is O(1)
 		 */
-        if (((i - 1) / 2) < 0) {
-            return false;
-        }
-        return true;
+        return ((i - 1) / 2) >= 0;
     }
 
     /**
@@ -56,15 +53,12 @@ public class HeapPQ<K, V> implements AdaptablePriorityQueue<K, V> {
      * @return true if has a left child
      */
     @TimeComplexity("O(1)")
-    public boolean hasLeft(int i) {
+    private boolean hasLeft(int i) {
          /* TCJ
          * No loops.
 		 * Only case is O(1)
 		 */
-        if (((2 * i) + 1) > list.size() - 1) {
-            return false;
-        }
-        return true;
+        return ((2 * i) + 1) <= (list.size() - 1);
     }
 
     /**
@@ -74,15 +68,12 @@ public class HeapPQ<K, V> implements AdaptablePriorityQueue<K, V> {
      * @return true if has right child
      */
     @TimeComplexity("O(1)")
-    public boolean hasRight(int i) {
+    private boolean hasRight(int i) {
          /* TCJ
          * No loops.
 		 * Only case is O(1)
 		 */
-        if (((2 * i) + 2) > list.size() - 1) {
-            return false;
-        }
-        return true;
+        return ((2 * i) + 2) <= (list.size() - 1);
     }
 
     /**
@@ -92,12 +83,12 @@ public class HeapPQ<K, V> implements AdaptablePriorityQueue<K, V> {
      * @return index of the parent node
      */
     @TimeComplexity("O(1)")
-    public int parent(int i) {
+    private int parent(int i) {
          /* TCJ
          * No loops.
 		 * Only case is O(1)
 		 */
-        if (i == 0 || i >= list.size()) {
+        if ((i == 0) || (i >= list.size())) {
             return -1;
         }
         return (i - 1) / 2;
@@ -110,7 +101,7 @@ public class HeapPQ<K, V> implements AdaptablePriorityQueue<K, V> {
      * @return index of the left child
      */
     @TimeComplexity("O(1)")
-    public int left(int i) {
+    private int left(int i) {
          /* TCJ
          * No loops.
 		 * Only case is O(1)
@@ -128,7 +119,7 @@ public class HeapPQ<K, V> implements AdaptablePriorityQueue<K, V> {
      * @return index of the right child
      */
     @TimeComplexity("O(1)")
-    public int right(int i) {
+    private int right(int i) {
          /* TCJ
          * No loops.
 		 * Only case is O(1)
@@ -146,7 +137,7 @@ public class HeapPQ<K, V> implements AdaptablePriorityQueue<K, V> {
      * @param j index of node to start upheap
      */
     @TimeComplexity("O(lg n)")
-    public void upheap(int j) {
+    private void upheap(int j) {
          /* TCJ
 		 * If inserted in index (size-1) then there is a
 		 * possibility of it needing to get to index = 0;
@@ -174,7 +165,7 @@ public class HeapPQ<K, V> implements AdaptablePriorityQueue<K, V> {
      * @param j index of node 2
      */
     @TimeComplexity("O(1)")
-    public void swap(ArrayList<AdaptableEntry<K, V>> A, int i, int j) {
+    private void swap(ArrayList<AdaptableEntry<K, V>> A, int i, int j) {
          /* TCJ
 		 * No loops.
 		 * Only case is O(1)
@@ -207,7 +198,7 @@ public class HeapPQ<K, V> implements AdaptablePriorityQueue<K, V> {
      * @param j index of parent node
      */
     @TimeComplexity("O(lg n)")
-    public void downheap(int j) {
+    private void downheap(int j) {
         /* TCJ
 		 * For each downheap, it has to check that both children are greater
 		 * than its parent, if downheaping the index 0, it will then have to check
@@ -220,7 +211,7 @@ public class HeapPQ<K, V> implements AdaptablePriorityQueue<K, V> {
             return;
         }
         int s = left(j);
-        if (hasRight(j) && c.compare(list.get(s).getKey(), list.get(right(j)).getKey()) > 0) {
+        if (hasRight(j) && (c.compare(list.get(s).getKey(), list.get(right(j)).getKey()) > 0)) {
             s = right(j);
         }
 
@@ -431,9 +422,9 @@ public class HeapPQ<K, V> implements AdaptablePriorityQueue<K, V> {
         private K Key;
         private V Value;
 
-        public AdaptableEntry(K key, V value) {
-            this.Key = key;
-            this.Value = value;
+        AdaptableEntry(K key, V value) {
+            Key = key;
+            Value = value;
         }
 
         @Override
@@ -441,7 +432,7 @@ public class HeapPQ<K, V> implements AdaptablePriorityQueue<K, V> {
             return Key;
         }
 
-        protected void setKey(K key) {
+        void setKey(K key) {
             Key = key;
         }
 
@@ -450,15 +441,15 @@ public class HeapPQ<K, V> implements AdaptablePriorityQueue<K, V> {
             return Value;
         }
 
-        protected void setValue(V value) {
+        void setValue(V value) {
             Value = value;
         }
 
-        public int getIndex() {
+        int getIndex() {
             return index;
         }
 
-        public void setIndex(int index) {
+        void setIndex(int index) {
             this.index = index;
         }
 

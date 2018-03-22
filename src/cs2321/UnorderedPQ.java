@@ -71,8 +71,8 @@ public class UnorderedPQ<K, V> implements PriorityQueue<K, V> {
         //Create new entry node
         Entry<K, V> newNode = new Entry<K, V>() {
 
-            private K newKey = key;
-            private V newValue = value;
+            private final K newKey = key;
+            private final V newValue = value;
 
             @Override
             public K getKey() {

@@ -50,14 +50,10 @@ public class ArrayList<E> implements List<E> {
     @TimeComplexity("O(1)")
     @Override
     public boolean isEmpty() {
-		/* TCJ
-		 * Compares a variable and a integer, best and worst is O(1)
+        /* TCJ
+         * Compares a variable and a integer, best and worst is O(1)
 		 */
-        if (size == 0) {
-            return true;
-        } else {
-            return false;
-        }
+        return size == 0;
     }
 
     /**
@@ -79,7 +75,7 @@ public class ArrayList<E> implements List<E> {
             return null;
         }
 
-        if (i >= 0 && i < size) {
+        if ((i >= 0) && (i < size)) {
             return array[i];
         } else {
             throw new IndexOutOfBoundsException();
@@ -102,7 +98,7 @@ public class ArrayList<E> implements List<E> {
 		 * which has O(1), then returns a value.
 		 * Worst case is O(1)
 		 */
-        if (i < 0 || i > size - 1) {
+        if ((i < 0) || (i > (size - 1))) {
             throw new IndexOutOfBoundsException();
         }
 
@@ -131,7 +127,7 @@ public class ArrayList<E> implements List<E> {
 		 * 
 		 */
         // If specified index is outside of index size or negative
-        if (i < 0 || i > size) {
+        if ((i < 0) || (i > size)) {
             throw new IndexOutOfBoundsException();
 
             // If Array is full
@@ -183,13 +179,13 @@ public class ArrayList<E> implements List<E> {
             throw new IndexOutOfBoundsException();
         }
 
-        if ((i == 0) && size == 1) {
+        if ((i == 0) && (size == 1)) {
             array[0] = null;
         }
 
         E e = array[i];
 
-        for (int j = i + 1; j <= size - 1; j++) {
+        for (int j = i + 1; j <= (size - 1); j++) {
             array[j - 1] = array[j];
         }
 
@@ -211,17 +207,13 @@ public class ArrayList<E> implements List<E> {
 		 * Best and worst case is O(n)
 		 */
         Iterator<E> myIterator = new Iterator<E>() {
-            private int index = 0;
+            private int index;
 
             @Override
             public boolean hasNext() {
 
                 // check if index is not out of bounds and the next item is not null
-                if (index < size) {
-                    return true;
-                } else {
-                    return false;
-                }
+                return index < size;
             }
 
             @Override
@@ -330,7 +322,7 @@ public class ArrayList<E> implements List<E> {
 
             E e = array[0];
 
-            for (int j = 1; j <= size - 1; j++) {
+            for (int j = 1; j <= (size - 1); j++) {
                 array[j - 1] = array[j];
             }
 
