@@ -85,7 +85,7 @@ class Huffman {
      * @return the length of the data encoded with Huffman Code, don't include data for the prefix tree and length of the original file.
      */
     @TimeComplexity("O(n log n)")
-    private int compress(String inputFile, String outputFile) {
+    public int compress(String inputFile, String outputFile) {
 
 
         t = new LinkedBinaryTree();
@@ -335,7 +335,7 @@ class Huffman {
      * @param outputFile plain text file
      */
     @TimeComplexity("O(n log n)")
-    private void decode(String inputFile, String outputFile) {
+    public void decode(String inputFile, String outputFile) {
 
         t = new LinkedBinaryTree();
         CODE_TABLE = new String[256];
