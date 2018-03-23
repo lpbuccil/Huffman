@@ -177,6 +177,8 @@ public class Huffman {
         //get length of data
         int lengthOfData = inputFileString.length();
 
+        int lengthOfEncodedData = 0;
+
 
         //Create binary string of int length
         String result = Long.toBinaryString(Integer.toUnsignedLong(lengthOfData) | 0x100000000L).substring(1);
@@ -198,8 +200,10 @@ public class Huffman {
             for (int j = 0; j < code.length(); j++) {
                 if (code.charAt(j) == '0') {
                     writeBit(0);
+                    lengthOfEncodedData++;
                 } else {
                     writeBit(1);
+                    lengthOfEncodedData++;
                 }
             }
         }
@@ -220,7 +224,7 @@ public class Huffman {
         }
 
 
-        return lengthOfData;
+        return lengthOfEncodedData;
     }
 
     /**
