@@ -51,28 +51,29 @@ public class Huffman {
      */
     public static void main(String[] args) {
         Huffman huffman = new Huffman();
-//        int length;
+        int length;
 //
 //        // db.txt has only two letters "ab". The length with Huffman coding should be 2.
-//        length = huffman.compress("ab.txt", "ab.txt.huffman");
-//        System.out.println("length is " + length);
+ //       length = huffman.compress("ab.txt", "ab.txt.huffman");
+   //     System.out.println("length is " + length);
 //
 //        // decode your newly created compress file. The generated file "ab.txt.decoded" should have same content as "ab.txt"
-//        huffman.decode("abra.txt.huffman", "abra.txt.decoded");
+        huffman.decode("ab.txt.compressed", "ab.txt.decoded");
 //
 //
 //        // decode the previous correctly compressed file by instructor.  The generated file "ab.txt.decoded" should have content as "ab.txt"
-//        huffman.decode("ab.txt.compressed", "ab.txt.decoded");
+        huffman.decode("abra.txt.compressed", "abra.txt.decoded");
 //
-//        huffman.compress("test1.txt", "test1.txt.compressed");
-//        huffman.decode("test1.txt.compressed", "test1.txt.decompressed");
+ //       huffman.compress("test1.txt", "test1.txt.compressed");
+ //       huffman.decode("test1.txt.compressed", "test1.txt.decompressed");
 //
 //        huffman.compress("tinytinyTale.txt", "tinytinyTale.txt.compressed");
-//        huffman.decode("tinytinyTale.txt.compressed", "tinytinyTale.txt.decompressed");
+        huffman.decode("tinytinyTale.txt.compressed", "tinytinyTale.txt.decoded");
+        huffman.decode("gogo.txt.compressed", "gogo.txt.decoded");
 
-        System.out.println(huffman.compress("SampleTextFile_1000kb.txt", "SampleTextFile_1000kb.txt.compressed"));
+     //  System.out.println(huffman.compress("SampleTextFile_1000kb.txt", "SampleTextFile_1000kb.txt.compressed"));
 
-        huffman.decode("SampleTextFile_1000kb.txt.compressed", "SampleTextFile_1000kb.txt.decompressed");
+       // huffman.decode("SampleTextFile_1000kb.txt.compressed", "SampleTextFile_1000kb.txt.decompressed");
 
         // You may perform the above same testing for other files, like abra.txt, gogo.txt, tinytinyTable.txt
 
@@ -98,7 +99,6 @@ public class Huffman {
         bitCount = 0;
         bitCounter = 0;
 
-        String inputFileString = "";
 
         FileReader fileReader;
 
@@ -411,6 +411,8 @@ public class Huffman {
             Position V = huffmanTree.root();
             while (huffmanTree.isInternal(V)) {
                 int b = getNextBit();
+
+
                 if (b == 0) {
                     V = huffmanTree.left(V);
                 } else {
