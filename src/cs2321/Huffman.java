@@ -22,12 +22,12 @@ import java.nio.file.Paths;
  * The format of the compressed file includes 3 continuously parts:
  *  1. prefix tree in bit stream
  *  2. length of the original file using 4 bytes
- *  3. data coded with Huffman coding. 
- * 
- * Encoding prefix tree bit stream: 
+ *  3. data coded with Huffman coding.
+ *
+ * Encoding prefix tree bit stream:
  *   if the node is external, output 0, followed by the letter
- *   if the node is internal, output 1, followed by 
- *  		the bit stream of left subtree, then the bit stream of right subtree. 
+ *   if the node is internal, output 1, followed by
+ *  		the bit stream of left subtree, then the bit stream of right subtree.
  */
 public class Huffman {
 
@@ -51,24 +51,28 @@ public class Huffman {
      */
     public static void main(String[] args) {
         Huffman huffman = new Huffman();
-        int length;
+//        int length;
+//
+//        // db.txt has only two letters "ab". The length with Huffman coding should be 2.
+//        length = huffman.compress("ab.txt", "ab.txt.huffman");
+//        System.out.println("length is " + length);
+//
+//        // decode your newly created compress file. The generated file "ab.txt.decoded" should have same content as "ab.txt"
+//        huffman.decode("abra.txt.huffman", "abra.txt.decoded");
+//
+//
+//        // decode the previous correctly compressed file by instructor.  The generated file "ab.txt.decoded" should have content as "ab.txt"
+//        huffman.decode("ab.txt.compressed", "ab.txt.decoded");
+//
+//        huffman.compress("test1.txt", "test1.txt.compressed");
+//        huffman.decode("test1.txt.compressed", "test1.txt.decompressed");
+//
+//        huffman.compress("tinytinyTale.txt", "tinytinyTale.txt.compressed");
+//        huffman.decode("tinytinyTale.txt.compressed", "tinytinyTale.txt.decompressed");
 
-        // db.txt has only two letters "ab". The length with Huffman coding should be 2.
-        length = huffman.compress("ab.txt", "ab.txt.huffman");
-        System.out.println("length is " + length);
+        System.out.println(huffman.compress("SampleTextFile_1000kb.txt", "SampleTextFile_1000kb.txt.compressed"));
 
-        // decode your newly created compress file. The generated file "ab.txt.decoded" should have same content as "ab.txt"
-        huffman.decode("abra.txt.huffman", "abra.txt.decoded");
-
-
-        // decode the previous correctly compressed file by instructor.  The generated file "ab.txt.decoded" should have content as "ab.txt"
-        huffman.decode("ab.txt.compressed", "ab.txt.decoded");
-
-        huffman.compress("test1.txt", "test1.txt.compressed");
-        huffman.decode("test1.txt.compressed", "test1.txt.decompressed");
-
-        huffman.compress("tinytinyTale.txt", "tinytinyTale.txt.compressed");
-        huffman.decode("tinytinyTale.txt.compressed", "tinytinyTale.txt.decompressed");
+        huffman.decode("SampleTextFile_1000kb.txt.compressed", "SampleTextFile_1000kb.txt.decompressed");
 
         // You may perform the above same testing for other files, like abra.txt, gogo.txt, tinytinyTable.txt
 
@@ -95,8 +99,10 @@ public class Huffman {
         bitCounter = 0;
 
         String inputFileString = "";
-        char[] inputFileCharacterArray = null;
+
         FileReader fileReader;
+
+        ArrayList<Character> inputFileCharacterArray = new ArrayList<>();
 
 
         //Read all text from file and store it in inputFileString then add all char to inputFileCharArray
@@ -104,12 +110,11 @@ public class Huffman {
             fileReader = new FileReader(inputFile);
             while (fileReader.ready()) {
                 // System.out.println((char) fileReader.read());
-                inputFileString += (char) fileReader.read();
+               inputFileCharacterArray.addLast((char) fileReader.read());
             }
 
             //remove and windows char
             //inputFileString = inputFileString.replace("\r", "").replace("\n", "");
-            inputFileCharacterArray = inputFileString.toCharArray();
             fileReader.close();
         } catch (Exception e) {
             System.out.println("ERROR: Cannot read file");
@@ -118,8 +123,8 @@ public class Huffman {
 
         //Calculate frequency of chars
         int[] frequencyOfChars = new int[256];
-        for (int i = 0; i < inputFileCharacterArray.length; i++) {
-            frequencyOfChars[inputFileCharacterArray[i]]++;
+        for (int i = 0; i < inputFileCharacterArray.size(); i++) {
+            frequencyOfChars[inputFileCharacterArray.get(i)]++;
         }
 
 
@@ -175,7 +180,7 @@ public class Huffman {
 
 
         //get length of data
-        int lengthOfData = inputFileString.length();
+        int lengthOfData = inputFileCharacterArray.size();
 
         int lengthOfEncodedData = 0;
 
@@ -195,8 +200,8 @@ public class Huffman {
 
 
         //Write encoded data
-        for (int k = 0; k < inputFileCharacterArray.length; k++) {
-            String code = CODE_TABLE[(int) inputFileCharacterArray[k]];
+        for (int k = 0; k < inputFileCharacterArray.size(); k++) {
+            String code = CODE_TABLE[(int) inputFileCharacterArray.get(k)];
             for (int j = 0; j < code.length(); j++) {
                 if (code.charAt(j) == '0') {
                     writeBit(0);
@@ -323,8 +328,8 @@ public class Huffman {
         if (t.isExternal(V)) {
             CODE_TABLE[V.getElement()] = code;
         } else {
-            buildCodeTable(t.left(V), code + "0");
-            buildCodeTable(t.right(V), code + "1");
+            buildCodeTable(t.left(V), code.concat("0"));
+            buildCodeTable(t.right(V), code.concat("1"));
         }
 
     }
