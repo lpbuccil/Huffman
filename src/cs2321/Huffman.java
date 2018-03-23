@@ -29,7 +29,7 @@ import java.nio.file.Paths;
  *   if the node is internal, output 1, followed by 
  *  		the bit stream of left subtree, then the bit stream of right subtree. 
  */
-class Huffman {
+public class Huffman {
 
     private LinkedBinaryTree t = new LinkedBinaryTree();
     private String[] CODE_TABLE = new String[256];
@@ -42,9 +42,6 @@ class Huffman {
     private ArrayList<Integer> inputBinaryArray;
     //For compress
     private int bitCounter;
-
-    private Huffman() {
-    }
 
     /**
      * Decode the compressed data file back to the original data file.
